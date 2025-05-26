@@ -1,7 +1,12 @@
 :root {
   --main-font: 'Inter-Variable';
-  --accent-font: 'PressStart2P';
   --main-font-weight: 400;
   --main-font-heading-weight: 700;
-  --main-color: rgb(0 0 0 / 1);
+  --main-font-size: 18px;
+  --accent-font: 'PressStart2P';
+  --text-color: rgb(0 0 0 / 1);
+  --bg-color: rgb(255 255 255 /1);
+  --text-stroke-color: var(--bg-color);
+  --content-block-inline-size: round(up, clamp(23.4375rem, 16.3732rem + 30.1408vw, 43.5rem), 1px)
+
 }
