@@ -7,6 +7,5 @@
   --text-color: rgb(0 0 0 / 1);
   --bg-color: rgb(255 255 255 /1);
   --text-stroke-color: var(--bg-color);
-  --content-block-inline-size: round(up, clamp(23.4375rem, 16.3732rem + 30.1408vw, 43.5rem), 1px)
-
+  --content-block-inline-size: round(up, clamp(23.4375rem, 16.2852rem + 30.5164vw, 43.75rem), 1px);
 }
