@@ -1,23 +1,34 @@
-/* Здесь вы напишете основную часть стилей страницы.
+@keyframes scaling {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.25);
+  }
+}
 
-Будьте внимательны! Для корректной работы скриптов на этом сайте нужно, чтобы в HTML некоторые классы были названы особым образом:
-✦ like-icon — для svg-иконки анимированного сердца
-✦ card__like-button — для кнопки Like рядом с иконкой
-✦ card__icon-button — для кнопки, оборачивающей иконку
-✦ card__icon-button — для кнопки, оборачивающей иконку
-✦ is-liked — для обозначения состояния лайкнутой иконки в виде сердца
-✦ button__text — для обозначения текстового элемента внутри кнопки
-
-*/
+@keyframes sparking {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 
 .page {
   color: var(--text-color, rgb(0 0 0 / 1));
   font-family: var(--main-font, sans-serif);
   font-size: var(--main-font-size, 18px);
-  background-color: chocolate;
   min-inline-size: 320px;
   min-block-size: 100dvb;
   font-variation-settings: 'wght' var(--main-font-weight, 400);
+  background-image: var(--bg-image,
+    repeating-linear-gradient(#d3d3d3 0px 2px, transparent 2px 4px),
+    repeating-linear-gradient(90deg, #d3d3d3 0 2px, transparent 2px 4px),
+    linear-gradient(#e7e7e7, #1a1a1a));
+  background-size: cover;
+  background-attachment: fixed;
 }
 
 .logo {
@@ -28,7 +39,8 @@
 
 .content-block {
   margin-inline: auto;
-  inline-size: var(--content-block-inline-size, round(up, clamp(23.4375rem, 16.2852rem + 30.5164vw, 43.75rem), 1px));
+  inline-size: var(--content-block-inline-size,
+  round(up, clamp(23.4375rem, 16.2852rem + 30.5164vw, 43.75rem), 1px));
 }
 
 .block-with-border {
@@ -43,6 +55,71 @@
   font-size: 14px;
   line-height: 90%;
   background-color: var(--bg-color, rgb(255 255 255 /1));
+  transition: box-shadow 0.3s ease;
+  position: relative;
+}
+
+.button__text {
+  color: var(--bg-color, rgb(255 255 255 /1));
+  position: relative;
+  z-index: 1;
+  mix-blend-mode: difference;
+}
+
+.button:focus-visible {
+  outline: none;
+  box-shadow: 2px 2px 0 var(--text-color, rgb(0 0 0 / 1));
+}
+
+.button::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--text-color, rgb(0 0 0 / 1));
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform 0.5s ease-in-out;
+}
+
+.button:hover::after{
+  transform: scaleX(1);
+}
+
+/* FILTERS */
+
+.filter-brightness {
+  filter: brightness(200%);
+}
+
+.filter-contrast {
+  filter: contrast(60%);
+}
+
+.filter-blur {
+  filter: blur(3px);
+}
+
+.filter-grayscale {
+  filter: grayscale(0.8);
+}
+
+.filter-saturate {
+  filter: saturate(180%);
+}
+
+.filter-hue-rotate {
+  filter: hue-rotate(-90deg);
+}
+
+.filter-sepia {
+  filter: sepia(80%);
+}
+
+.filter-invert {
+  filter: invert(0.9) hue-rotate(90deg);
 }
 
 /* HEADER BLOCK */
@@ -142,8 +219,21 @@
   gap: 12px;
 }
 
+.card__icon-button {
+  height: 38px;
+  border: 2px solid transparent;
+  transition: border-color 0.3s ease;
+}
+
+.card__icon-button:focus-visible {
+  outline: none;
+  border-color: var(--text-color, rgb(0 0 0 / 1));
+}
+
 .card__like-button {
-  padding: 10.7185px 35px;
+  padding-block: 10.7185px;
+  min-width: 130px;
+  text-align: center;
 }
 
 .button-save {
@@ -154,9 +244,82 @@
   padding: 15px 21px 15px 19px;
 }
 
-.icon-save {
+.save-icon {
+  color: rgb(255, 255, 255);
   width: 21px;
   aspect-ratio: 1 / 1;
+  position: relative;
+  z-index: 1;
+  mix-blend-mode: difference;
+}
+
+/* like-icon */
+
+.like-icon {
+  height: 100%;
+}
+
+.contour {
+  fill: var(--contour-color, rgb(0 0 0 / 1));
+  transition: fill 0.3s 0.06s linear;
+}
+
+.main-body {
+  fill: none;
+  transition: fill 0.3s 0.05s linear;
+}
+
+.core {
+  fill: none;
+  transition: fill 0.3s linear;
+}
+
+.sparks {
+  fill: var(--animation-fill-color, rgb(255 0 0 / 1));
+  opacity: 0;
+}
+
+.like-icon:hover .core{
+  fill: var(--contour-color, rgb(0 0 0 / 1));
+  transition: fill 0.3s 0.03s linear;
+}
+
+.like-icon:hover .main-body{
+  fill: var(--contour-color, rgb(0 0 0 / 1));
+  transition: fill 0.03s linear;
+}
+
+.like-icon:active .core{
+  fill: var(--animation-fill-color, rgb(255 0 0 / 1));
+  transition: fill 0.3s 0.03s linear;
+}
+
+.like-icon:active .main-body{
+  fill: var(--animation-fill-color, rgb(255 0 0 / 1));
+  transition: fill 0.03s linear;
+}
+
+.like-icon.is-liked .core{
+  fill: var(--animation-fill-color, rgb(255 0 0 / 1));
+  transition: fill 0.3s 0.03s linear;
+}
+
+.like-icon.is-liked .main-body{
+  fill: var(--animation-fill-color, rgb(255 0 0 / 1));
+  transition: fill 0.03s linear;
+}
+
+.like-icon.is-liked .contour {
+  fill: var(--animation-fill-color, rgb(255 0 0 / 1));
+  transition: fill 0.1s linear;
+}
+
+.like-icon.is-liked .heart{
+  animation: scaling 0.3s 0.1s ease-in 1;
+}
+
+.like-icon.is-liked .sparks{
+  animation: sparking 0.3s 0.3s ease-in 1;
 }
 
 /* modal window */
@@ -181,7 +344,7 @@
   text-transform: uppercase;
 }
 
-.save-instruction .icon-save {
+.save-instruction .save-icon {
   width: 39px;
 }
 
@@ -193,6 +356,8 @@
 .save-to-floppy[open]::backdrop {
   background-color: rgb(0 0 0 / 0.75);
 }
+
+/* MEDIA */
 
 @media (width <= 375px) {
   :root {
